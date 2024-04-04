@@ -37,20 +37,25 @@ Route::group([
     Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
 });
 
-Route::middleware(['auth:api', 'isactive'])->prefix('sensors')->group(function () {
-    Route::get('index', [SensorController::class, 'index']);
-    Route::post('store', [SensorController::class, 'store']);
-    Route::put('update/{id}', [SensorController::class, 'update'])->where('id', '[0-9]+');
-    Route::delete('destroy/{id}', [SensorController::class, 'destroy'])->where('id', '[0-9]+');
-});
 
-Route::middleware(['auth:api', 'isactive'])->prefix('users')->group(function () {
-    Route::get('index', [UserController::class, 'index']);
-    Route::post('store', [UserController::class, 'store']);
-    Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
-    Route::put('update/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
-    Route::delete('destroy/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');;
-});
 
-Route::middleware(['auth:api', 'isactive'])->prefix('plants')->group(function () {
+Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
+
+    Route::prefix('sensors')->group(function () {
+        Route::get('index', [SensorController::class, 'index']);
+        Route::post('store', [SensorController::class, 'store']);
+        Route::put('update/{id}', [SensorController::class, 'update'])->where('id', '[0-9]+');
+        Route::delete('destroy/{id}', [SensorController::class, 'destroy'])->where('id', '[0-9]+');
+    });
+    
+    Route::middleware('isadmin')->prefix('users')->group(function () {
+        Route::get('index', [UserController::class, 'index']);
+        Route::post('store', [UserController::class, 'store']);
+        Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
+        Route::put('update/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+        Route::delete('destroy/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');;
+    });
+    
+    Route::prefix('plants')->group(function () {
+    });
 });
