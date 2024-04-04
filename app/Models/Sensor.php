@@ -17,6 +17,6 @@ class Sensor extends Model
     ];
 
     public function plants(){
-        return $this->belongsToMany(Plant::class);
+        return $this->belongsToMany(Plant::class,'plant_sensor');
     }
 }

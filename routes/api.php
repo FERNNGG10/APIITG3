@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PlantController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\UserController;
+use App\Models\Plant;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +43,7 @@ Route::group([
 
 Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
 
-    Route::prefix('sensors')->group(function () {
+    Route::middleware('isadmin')->prefix('sensors')->group(function () {
         Route::get('index', [SensorController::class, 'index']);
         Route::post('store', [SensorController::class, 'store']);
         Route::put('update/{id}', [SensorController::class, 'update'])->where('id', '[0-9]+');
@@ -57,5 +59,9 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
     });
     
     Route::prefix('plants')->group(function () {
+        Route::get('index',[PlantController::class,'index']);
+        Route::post('store',[PlantController::class,'store']);
+        Route::put('update/{id}',[PlantController::class,'update']);
+        Route::delete('destroy/{id}',[PlantController::class,'destroy']);
     });
 });
