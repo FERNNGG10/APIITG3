@@ -7,9 +7,11 @@ use App\Models\User;
 use App\Rules\EmailRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -34,7 +36,7 @@ class UserController extends Controller
         $user = User::create([
             'name'  =>  $request->name,
             'email' =>  $request->email,
-            'password'  =>  $request->password,
+            'password'  =>  Hash::make($request->password),
             'status'    =>  $request->status,
             'code'      =>  Crypt::encrypt(rand(100000,999999)),
             'rol_id'    =>  $request->rol_id
@@ -64,6 +66,45 @@ class UserController extends Controller
             return response()->json("Usuario activado",200);
         }
         return response()->json("No se encontro usuario",404);
+    }
+
+    public function update(Request $request,int $id){
+        $user = User::where('id',$id)->first();
+        $validate = Validator::make($request->all(),[
+            'name'  =>  'required|max:30',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->id),
+                new EmailRule
+            ],
+            'password'  =>  'nullable|min:8',
+            'status'    =>  'required|boolean',
+            'rol_id'    => 'required|exists:roles,id'
+        ]);
+        if(!$user){
+            return response()->json([
+                'msg'   =>  "Usuario no encontrado"
+            ],404);
+        }
+        if($validate->fails()){
+            return response()->json([
+                'errors'    =>  $validate->errors()
+            ],422);
+        }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->status = $request->status;
+        $user->rol_id = $request->rol_id;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+        return response()->json([
+            'msg'   =>  "Usuario actualizado",
+            'data'  =>  $user
+        ],200);
+        
     }
 
     public function destroy(int $id){
