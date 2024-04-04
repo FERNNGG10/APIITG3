@@ -51,6 +51,18 @@ class PlantController extends Controller
 
     }
 
+    public function show(int $id){
+        $plant = Plant::where('id',$id)->with('sensors')->first();
+        if(!$plant){
+            return response()->json([
+                'msg'=>'Planta no encontrado'
+            ],404);
+        }
+        return response()->json([
+            'data'  =>  $plant
+        ],200);
+    }
+
     public function update(Request $request,int $id){
         $plant = Plant::where('id',$id)->first();
         $validate = Validator::make($request->all(),[

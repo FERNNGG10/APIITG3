@@ -125,4 +125,14 @@ class UserController extends Controller
             'data'  =>  $user
         ]);
     }
+
+    public function show(int $id){
+        $user = User::where('id',$id)->first();
+        if(!$user){
+            return response()->json([
+                'msg'   =>  "Usuario no encontrado"
+            ],404);
+        }
+        return response()->json(['data'=>$user],200);
+    }
 }

@@ -69,4 +69,12 @@ class SensorController extends Controller
         ],200);
         
     }
+
+    public function show(int $id){
+        $sensor = Sensor::where('id',$id)->first();
+        if(!$sensor){
+            return response()->json(['msg'=>'Sensor no encontrado'],404);
+        }
+        return response()->json(['data'=>$sensor],200);
+    }
 }
