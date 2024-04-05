@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MongoController;
 use App\Http\Controllers\PlantController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\UserController;
 use App\Models\Plant;
+use App\Models\Rol;
 use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +50,7 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
         Route::post('store', [SensorController::class, 'store']);
         Route::put('update/{id}', [SensorController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('destroy/{id}', [SensorController::class, 'destroy'])->where('id', '[0-9]+');
+        Route::get('show/{id}',[SensorController::class,'show'])->where('id', '[0-9]+');
     });
     
     Route::middleware('isadmin')->prefix('users')->group(function () {
@@ -56,6 +59,7 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
         Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
         Route::put('update/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('destroy/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');;
+        Route::get('show/{id}',[UserController::class,'show'])->where('id', '[0-9]+');
     });
     
     Route::prefix('plants')->group(function () {
@@ -63,5 +67,17 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
         Route::post('store',[PlantController::class,'store']);
         Route::put('update/{id}',[PlantController::class,'update']);
         Route::delete('destroy/{id}',[PlantController::class,'destroy']);
+        Route::get('show/{id}',[PlantController::class,'show'])->where('id', '[0-9]+');
+    });
+
+    Route::prefix('websocket')->group(function(){
+        Route::get('last',[MongoController::class,'last']);
+    });
+
+    Route::withoutMiddleware(['auth:api','isactive'])->prefix('mongo')->group(function(){
+        Route::get('index',[MongoController::class,'index']);
+        Route::post('store',[MongoController::class,'store']);
+        
     });
 });
+
