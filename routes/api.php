@@ -39,6 +39,7 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('me', [AuthController::class, 'me']);
     Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
+    Route::get('getrol',[AuthController::class,'rolid']);
 });
 
 

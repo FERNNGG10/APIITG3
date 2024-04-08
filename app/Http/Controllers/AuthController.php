@@ -142,6 +142,11 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
+    public function rolid()
+    {
+        return response()->json(auth()->user()->rol_id);
+    }
+
     /**
      * Get the token array structure.
      *
