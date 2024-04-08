@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MongoController;
 use App\Http\Controllers\PlantController;
+use App\Http\Controllers\RolController;
 use App\Http\Controllers\SensorController;
 use App\Http\Controllers\UserController;
 use App\Models\Plant;
@@ -53,7 +54,13 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
         Route::delete('destroy/{id}', [SensorController::class, 'destroy'])->where('id', '[0-9]+');
         Route::get('show/{id}',[SensorController::class,'show'])->where('id', '[0-9]+');
     });
-    
+    Route::middleware('isadmin')->prefix('roles')->group(function () {
+        Route::get('index', [RolController::class, 'index']);
+        Route::post('store', [RolController::class, 'store']);
+        Route::put('update/{id}', [RolController::class, 'update'])->where('id', '[0-9]+');
+        Route::delete('destroy/{id}', [RolController::class, 'destroy'])->where('id', '[0-9]+');;
+        Route::get('show/{id}',[RolController::class,'show'])->where('id', '[0-9]+');
+    });
     Route::middleware('isadmin')->prefix('users')->group(function () {
         Route::get('index', [UserController::class, 'index']);
         Route::post('store', [UserController::class, 'store']);
