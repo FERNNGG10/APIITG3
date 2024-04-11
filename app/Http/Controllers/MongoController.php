@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DataSensoEvent;
 use App\Models\SensorMongo;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,12 @@ class MongoController extends Controller
     }
 
     public function last(){
-        $lastSensor = SensorMongo::latest()->first();
-        return response()->json(['data' => $lastSensor], 200);
+        $lastSensor = SensorMongo::orderBy('_id', 'desc')->first();
+        if($lastSensor){
+            event(new DataSensoEvent($lastSensor));
+            return response()->json(['data' => $lastSensor], 200);
+        }
+        return response()->json(['error' => "No se encontraron datos"], 404);
+       
     }
 }
