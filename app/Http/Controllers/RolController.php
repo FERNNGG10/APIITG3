@@ -22,7 +22,7 @@ class RolController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 4422);
+            return response()->json($validator->errors(), 422);
         }
 
         $rol = new Rol();
