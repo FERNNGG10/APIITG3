@@ -41,6 +41,7 @@ Route::group([
     Route::get('me', [AuthController::class, 'me']);
     Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
     Route::get('getrol',[AuthController::class,'rolid']);
+    Route::get('getstatus',[AuthController::class,'status']);
 });
 
 
@@ -80,6 +81,7 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
 
     Route::prefix('websocket')->group(function(){
         Route::get('last',[MongoController::class,'last']);
+        Route::post('bomb',[MongoController::class,'bomba']);
     });
 
     Route::withoutMiddleware(['auth:api','isactive'])->prefix('mongo')->group(function(){

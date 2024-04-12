@@ -49,7 +49,7 @@ class PlantController extends Controller
             'msg'   =>  "Planta creada",
             'data'  =>  $plant
         ],201); 
-
+                                                                                                
     }
 
     public function show(int $id){

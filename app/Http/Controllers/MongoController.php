@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BombaEvent;
 use App\Events\DataSensoEvent;
 use App\Models\SensorMongo;
 use Illuminate\Http\Request;
@@ -28,5 +29,12 @@ class MongoController extends Controller
         }
         return response()->json(['error' => "No se encontraron datos"], 404);
        
+    }
+
+    public function bomba(){
+        $data = true;
+        event(new BombaEvent($data));
+        //sleep()
+        return response()->json(['msg'=>"Se esta regando tu planta",'data'=>$data],200);
     }
 }
