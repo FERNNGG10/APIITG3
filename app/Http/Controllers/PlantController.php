@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DataSensoEvent;
 use App\Models\Plant;
 use App\Models\Sensor;
 use Illuminate\Http\Client\ResponseSequence;
@@ -22,7 +23,7 @@ class PlantController extends Controller
 
             ];
         });
-       
+        event(new DataSensoEvent($plants));
         return response()->json(['data'=>$plants],200);
     }
 
@@ -48,7 +49,7 @@ class PlantController extends Controller
             'msg'   =>  "Planta creada",
             'data'  =>  $plant
         ],201); 
-
+                                                                                                
     }
 
     public function show(int $id){
