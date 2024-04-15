@@ -65,7 +65,6 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
     Route::middleware('isadmin')->prefix('users')->group(function () {
         Route::get('index', [UserController::class, 'index']);
         Route::post('store', [UserController::class, 'store']);
-        Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
         Route::put('update/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('destroy/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');;
         Route::get('show/{id}',[UserController::class,'show'])->where('id', '[0-9]+');
