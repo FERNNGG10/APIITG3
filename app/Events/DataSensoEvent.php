@@ -37,7 +37,7 @@ class DataSensoEvent implements ShouldBroadcast
         ];
     }
 
-    public function brodcastAs(){
+    public function broadcastAs(){
         return 'MongoData';
     }
 }

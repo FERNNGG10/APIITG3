@@ -23,7 +23,7 @@ class PlantController extends Controller
 
             ];
         });
-        event(new DataSensoEvent($plants));
+        
         return response()->json(['data'=>$plants],200);
     }
 
