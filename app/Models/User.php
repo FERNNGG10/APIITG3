@@ -54,6 +54,12 @@ class User extends Authenticatable implements JWTSubject
     public $timestamps = false;
 
     
+    public function plants(){
+        return $this->hasMany(Plant::class);
+    }
+
+
+    
     // Rest omitted for brevity
 
     /**

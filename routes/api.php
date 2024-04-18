@@ -42,6 +42,7 @@ Route::group([
     Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
     Route::get('getrol',[AuthController::class,'rolid']);
     Route::get('getstatus',[AuthController::class,'status']);
+    Route::post('changepassword',[AuthController::class,'changePassword']);
 });
 
 

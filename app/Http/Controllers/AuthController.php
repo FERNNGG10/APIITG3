@@ -60,7 +60,7 @@ class AuthController extends Controller
         if($user){
             $user->status = true;
             $user->save();
-            return response()->json("Usuario activado",200);
+            return view('mails.activado');
         }
         return response()->json("No se encontro usuario",404);
     }
@@ -115,10 +115,14 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+        $user->plant_count = $user->plants()->count();
+        return response()->json($user);
     }
+    
 
     public function status()
     {
@@ -152,6 +156,22 @@ class AuthController extends Controller
         return response()->json(auth()->user()->rol_id);
     }
 
+    
+    public function changePassword(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'password'  =>  'required|min:8'
+        ]);
+        if($validate->fails()){
+            return response()->json(['errors'=>$validate->errors()],422);
+        }
+        $user = auth()->user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['msg' => 'Contraseña actualizada con éxito'],200);
+    }
+
+
     /**
      * Get the token array structure.
      *
@@ -167,4 +187,6 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
+
+
 }
