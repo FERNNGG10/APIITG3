@@ -17,7 +17,7 @@ class IsActiveMiddleware
     public function handle(Request $request, Closure $next)
     {
         if(!auth()->user()->status){
-            return response()->json("La cuenta no esta activa",401);
+            return response()->json(["error"=>"La cuenta no esta activa"],401);
         }
         return $next($request);
     }

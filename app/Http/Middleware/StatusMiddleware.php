@@ -23,7 +23,7 @@ class StatusMiddleware
             return $next($request);
         }
 
-        return response()->json("La cuenta no ha sido activada o no existe",403);
+        return response()->json(["error"=>"La cuenta no ha sido activada o no existe"],403);
 
         
     }
