@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRolEvent;
 use App\Mail\ActiveMail;
 use App\Mail\CodeMail;
 use App\Models\User;
@@ -169,6 +170,11 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         return response()->json(['msg' => 'Contraseña actualizada con éxito'],200);
+    }
+
+    public function socketRol(){
+        event(new UserRolEvent(auth()->user()->rol_id));
+        return response()->json(auth()->user()->rol_id);
     }
 
 
