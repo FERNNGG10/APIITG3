@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRolEvent;
 use App\Mail\ActiveMail;
 use App\Models\User;
 use App\Rules\EmailRule;
@@ -100,6 +101,8 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->save();
+        $data =["user_id"=>$user->id,"rol_id"=>$user->rol_id,"status"=>$user->status];
+        event(new UserRolEvent($data));
         return response()->json([
             'msg'   =>  "Usuario actualizado",
             'data'  =>  $user

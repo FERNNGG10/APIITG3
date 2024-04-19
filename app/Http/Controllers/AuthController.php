@@ -173,7 +173,7 @@ class AuthController extends Controller
     }
 
     public function socketRol(){
-        event(new UserRolEvent(auth()->user()->rol_id));
+       
         return response()->json(auth()->user()->rol_id);
     }
 

@@ -43,7 +43,7 @@ Route::group([
     Route::get('getrol',[AuthController::class,'rolid']);
     Route::get('getstatus',[AuthController::class,'status']);
     Route::post('changepassword',[AuthController::class,'changePassword']);
-    Route::get('socketrol',[AuthController::class,'socketRol']);
+   
 });
 
 
