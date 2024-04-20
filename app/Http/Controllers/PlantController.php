@@ -111,6 +111,37 @@ class PlantController extends Controller
         ],200);
 
     }
+
+    public function inactivePlants(){
+        $plants = Plant::where('user_id',auth()->user()->id)->where('status',0)->with('sensors')->get()->map(function($plant){
+            $sensorNames = $plant->sensors->pluck('name');
+            return [
+                'id'    =>  $plant->id,
+                'plant' =>  $plant->plant,
+                'status'    =>  $plant->status,
+                'sensors' => $sensorNames
+
+            ];
+        });
+        
+        return response()->json(['data'=>$plants],200);
+    }
+
+
+    public function activePlants(){
+        $plants = Plant::where('user_id',auth()->user()->id)->where('status',1)->with('sensors')->get()->map(function($plant){
+            $sensorNames = $plant->sensors->pluck('name');
+            return [
+                'id'    =>  $plant->id,
+                'plant' =>  $plant->plant,
+                'status'    =>  $plant->status,
+                'sensors' => $sensorNames
+
+            ];
+        });
+        
+        return response()->json(['data'=>$plants],200);
+    }
     
 
 

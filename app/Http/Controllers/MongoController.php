@@ -18,6 +18,10 @@ class MongoController extends Controller
        
         $sensorData = $request->all();
         $sensor = SensorMongo::create($sensorData);
+        $lastSensor = SensorMongo::orderBy('_id', 'desc')->first();
+        if($lastSensor){
+            event(new DataSensoEvent($lastSensor));
+        }
         return response()->json(['message' => 'Datos de sensor guardados con éxito', 'data' => $sensor], 201);
     }
 

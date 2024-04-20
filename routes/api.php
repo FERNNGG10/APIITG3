@@ -78,6 +78,8 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
         Route::put('update/{id}',[PlantController::class,'update']);
         Route::delete('destroy/{id}',[PlantController::class,'destroy']);
         Route::get('show/{id}',[PlantController::class,'show'])->where('id', '[0-9]+');
+        Route::get('inactive',[PlantController::class,'inactivePlants']);
+        Route::get('active',[PlantController::class,'activePlants']);
     });
 
     Route::prefix('websocket')->group(function(){
