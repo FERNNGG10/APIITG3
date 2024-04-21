@@ -15,6 +15,11 @@ class RolController extends Controller
         return response()->json($roles);
     }
 
+    public function index2(){
+        $roles = Rol::all();
+        return response()->json(["data"=>$roles]);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
