@@ -59,6 +59,7 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
     });
     Route::middleware('isadmin')->prefix('roles')->group(function () {
         Route::get('index', [RolController::class, 'index']);
+        Route::get('index2',[RolController::class,'index2']);
         Route::post('store', [RolController::class, 'store']);
         Route::put('update/{id}', [RolController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('destroy/{id}', [RolController::class, 'destroy'])->where('id', '[0-9]+');;
