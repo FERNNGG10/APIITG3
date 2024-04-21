@@ -84,7 +84,8 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
 
     Route::prefix('websocket')->group(function(){
         Route::get('last',[MongoController::class,'last']);
-        Route::post('bomb',[MongoController::class,'bomba']);
+        Route::get('ios/last',[MongoController::class,'ioslast']);
+        Route::post('bomb',[MongoController::class,'bomba']);   
     });
 
     Route::withoutMiddleware(['auth:api','isactive'])->prefix('mongo')->group(function(){

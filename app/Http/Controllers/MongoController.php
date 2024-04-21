@@ -41,4 +41,12 @@ class MongoController extends Controller
         //sleep()
         return response()->json(['msg'=>"Se esta regando tu planta",'data'=>$data],200);
     }
+
+    public function ioslast(){
+        $lastSensor = SensorMongo::orderBy('_id', 'desc')->first();
+        if($lastSensor){
+            return response()->json(['data' => $lastSensor], 200);
+        }
+        return response()->json(['error' => "No se encontraron datos"], 404);
+    }
 }
