@@ -50,6 +50,14 @@ class UserSeeder extends Seeder
                 'password'  => Hash::make('12345678'),
                 'code'  => Crypt::encrypt(rand(100000,999999))
             ],
+            [
+                'name'  => "Jorge",
+                'email' => "jorgefullscout2.0@gmail.com",
+                'rol_id'    =>  2,
+                'status'    => true,
+                'password'  => Hash::make('password'),
+                'code'  => Crypt::encrypt(rand(100000,999999))
+            ],
         ];
 
         foreach($users as $user){
