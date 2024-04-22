@@ -38,7 +38,7 @@ Route::group([
     Route::middleware('status')->post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::get('me', [AuthController::class, 'me']);
+    Route::middleware('isactive')->get('me', [AuthController::class, 'me']);
     Route::get('active/{user}', [AuthController::class, 'active'])->middleware('signed')->name('active');
     Route::get('getrol',[AuthController::class,'rolid']);
     Route::get('getstatus',[AuthController::class,'status']);
