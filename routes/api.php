@@ -82,9 +82,20 @@ Route::middleware(['auth:api', 'isactive'])->prefix('v1')->group(function(){
         Route::get('inactive',[PlantController::class,'inactivePlants']);
         Route::get('active',[PlantController::class,'activePlants']);
     });
-
+//forma decendente
     Route::prefix('websocket')->group(function(){
         Route::get('last',[MongoController::class,'last']);
+        
+        //Route::get('todos',[MongoController::class,'todos']);
+        Route::get('agua',[MongoController::class,'agua']);
+        Route::get('temperatura',[MongoController::class,'temperatura']);
+        Route::get('humedad',[MongoController::class,'humedad']);
+        Route::get('lluvia',[MongoController::class,'lluvia']);
+        Route::get('suelo',[MongoController::class,'suelo']);
+        Route::get('luz',[MongoController::class,'luz']);
+        Route::get('movimiento',[MongoController::class,'movimiento']);
+        Route::get('vibracion',[MongoController::class,'vibracion']);
+
         Route::get('ios/last',[MongoController::class,'ioslast']);
         Route::post('bomb',[MongoController::class,'bomba']);   
     });

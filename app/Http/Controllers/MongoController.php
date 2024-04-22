@@ -49,4 +49,114 @@ class MongoController extends Controller
         }
         return response()->json(['error' => "No se encontraron datos"], 404);
     }
+
+    public function todos(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            return response()->json(['data'=>$sensorData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos",404]);
+    }
+
+    
+    public function agua(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+
+        if($sensorData){
+            $aguaData = [];
+            foreach ($sensorData as $data) {
+                array_push($aguaData, $data->Agua);
+            }
+            return response()->json(['data' => $aguaData], 200);
+        }
+
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function temperatura(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $temperaturaData = [];
+            foreach($sensorData as $data){
+                array_push($temperaturaData,$data->Temperatura);
+            }
+            return response()->json(['data'=>$temperaturaData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function humedad(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $humedadData = [];
+            foreach($sensorData as $data){
+                array_push($humedadData,$data->Humedad);
+            }
+            return response()->json(['data'=>$humedadData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function lluvia(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $lluviaData = [];
+            foreach($sensorData as $data){
+                array_push($lluviaData,$data->Lluvia);
+            }
+            return response()->json(['data'=>$lluviaData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function suelo(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $sueloData = [];
+            foreach($sensorData as $data){
+                array_push($sueloData,$data->Suelo);
+            }
+            return response()->json(['data'=>$sueloData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function luz(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $luzData = [];
+            foreach($sensorData as $data){
+                array_push($luzData,$data->Luz);
+            }
+            return response()->json(['data'=>$luzData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function movimiento(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $movimientoData = [];
+            foreach($sensorData as $data){
+                array_push($movimientoData,$data->Movimiento);
+            }
+            return response()->json(['data'=>$movimientoData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+    public function vibracion(){
+        $sensorData = SensorMongo::orderBy('_id','desc')->get();
+        if($sensorData){
+            $vibracionData = [];
+            foreach($sensorData as $data){
+                array_push($vibracionData,$data->Vibracion);
+            }
+            return response()->json(['data'=>$vibracionData],200);
+        }
+        return response()->json(['error'=>"No se encontraron datos"], 404);
+    }
+
+
+    
 }
