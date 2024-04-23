@@ -45,7 +45,7 @@ return [
 
         'mongodb' => [
             'driver'   => 'mongodb',
-            'dsn'      => env('DB_URI', 'mongodb://18.221.189.206:27117'),
+            'dsn'      => env('DB_URI', 'mongodb://18.222.238.127:27117'),
             'database' => env('MONGODB_DATABASE', 'python'),
         ],
 
